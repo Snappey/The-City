@@ -1,0 +1,11 @@
+"city"
+{
+	"base"		"sandbox"
+	"title"		"City"
+	"maps"		"^rp_"
+	"menusystem"	"1"
+	
+	"settings"
+	{
+	}
+}
