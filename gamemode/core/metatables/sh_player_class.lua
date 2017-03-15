@@ -3,10 +3,12 @@ local PLAYER = FindMetaTable("Player")
 
 
 function PLAYER:SetupDataTables()
-	MsgC(XLBLUE, "[DATA] ", WHITE, "Declaring Player Datatable! ( " .. self:Nick() .. " : " .. self:SteamID64() .. " )\n")
+	MsgC(XLBLUE, "[DATA] ", WHITE, "Declaring Player Datatable! ( " .. self:Nick() .. " : " .. (self:SteamID64() || "#ERROR") .. " )\n")
 	self:NetworkVar("Int",0,"Money")
 	self:NetworkVar("Int",1,"Status") -- Integer will be used for status effects e.g. Tranq, Arrested, Handcuffed etc.
 	self:NetworkVar("Int",2,"Org")
+	self:NetworkVar("Int",3,"Access") -- Integer will be used for access flags e.g. job permissions / admin permissions
+	self:NetworkVar("Int",4,"PlayTime")
 
 	self:NetworkVar("Bool",0,"Loaded")
 	self:NetworkVar("Bool",1,"Gender")

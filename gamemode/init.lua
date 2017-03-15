@@ -60,8 +60,7 @@ function GM:Initialize()
 
 	util.SplashScreen()
 	MsgN("\n|---------------------------------------------------------------------------|")
-	MsgC(Color(255,255,255),"|	",XLBLUE, "The City has finished Loading!! ( " .. os.date( "%H:%M:%S - %d/%m/%Y" , CityRP.StartTime ) .. " )\n")
-	MsgC(Color(255,255,255),"|			",XLBLUE, "Time Taken: " .. CityRP.StartTime - os.time() .. "s!\n")
+	MsgC(Color(255,255,255),"|	",XLBLUE, "The City has finished Loading! ( " .. os.date( "%H:%M:%S - %d/%m/%Y" , CityRP.StartTime ) .. " )\n")
 	MsgN("|---------------------------------------------------------------------------|\n\n")
 	self.BaseClass.Initialize()
 end
@@ -81,6 +80,11 @@ end
 
 function GM:PlayerLoadout()
 	return true -- We handle our own loadouts
+end
+
+function GM:PlayerDisconnected(ply)
+	self:SaveData()
+	MsgC(XLBLUE, "[DATA] ", WHITE, "Saving player data on disconnect! ( " .. ply:Nick() .. " : " .. ply:SteamID64() .. ")")
 end
 
 GM:OnLoad()

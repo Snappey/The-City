@@ -59,21 +59,22 @@ function GM:DrawBar()
 	for _,v in ipairs(hud.Bar) do
 		if hook.Call("HUDShouldDrawBar", GAMEMODE, v.title) then continue end
 		if v.lastval == nil then v.lastval = v.var() end
-		x = (w - 8) - (i * 36)
+		if v.lastval >= 99 && math.ceil(v.lastval) == math.ceil(v.var()) then continue end -- hides the bar if its near max and hasnt changed
+		x = (w - 8) - (i * 38)
 		y = h - 180
 
 		if barminimal:GetInt() <= 0 then
 
 			surface.SetDrawColor(DBLACK, 200)
-				surface.DrawRect(x, y, 36, 135)
+				surface.DrawRect(x, y, 36, 136)
 				surface.DrawRect(x, y + 137, 36, 32)
 
-			v.lastval = Lerp(.01, v.lastval, v.var()) -- smoothen the values
-			perc = 133 / (v.maxvar / v.lastval)
+			v.lastval = Lerp(.05, v.lastval, v.var()) -- smoothen the values
+			perc = (135 / (v.maxvar / v.lastval))
 
-			surface.SetDrawColor(XLBLUE, 255)
-				render.SetScissorRect(x, y + (133 - perc), x + 36, y + 133, true)
-					surface.DrawRect(x + 1, y + 1, 34, 133)
+			surface.SetDrawColor(v.col, 255)
+				render.SetScissorRect(x, y + (133 - perc), x + 36, y + 135, true)
+					surface.DrawRect(x + 1, y + 1, 34, 135)
 				render.SetScissorRect(0, 0, 0, 0, false)
 
 			surface.SetDrawColor(WHITE)
@@ -106,10 +107,10 @@ function hud.AddBar(title, var, maxvar, suffix, col, icon)
 end
 
 local oSetDrawColor = surface.SetDrawColor -- Little helper function for my colour constants
-function surface.SetDrawColor(col, alpha, b,a) -- needs cleaning up
+function surface.SetDrawColor(col,alpha,b,a) -- needs cleaning up
 	if type(col) == "table" then
 		if alpha then
-			col.a = alpha
+			col.a = alpha 
 		end
 		oSetDrawColor(col)
 	else 
@@ -121,4 +122,5 @@ hud.AddInfo("Name", "Name: ",function() return LocalPlayer():GetRPName() || "#ER
 hud.AddInfo("Money", "Money: ", function() return util.FormatMoney(LocalPlayer():GetMoney()) || "#ERROR" end, "thecity/money.png")
 hud.AddInfo("Job", "Job: ", function() return team.GetName(LocalPlayer():Team()) || "#ERROR" end, "thecity/tag.png")
 
+hud.AddBar("Health", function() return LocalPlayer():Health() end, 100, "", RED, "thecity/heart.png")
 hud.AddBar("Stamina", function() return CityRP.GetNetVar("Stamina", 100) end, 100, "%", XLBLUE, "thecity/running.png")

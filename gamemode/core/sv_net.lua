@@ -1,5 +1,7 @@
 
-CityRP.Net = {}
+CityRP.Net = CityRP.Net || {}
+
+-- TODO: Refactor / optimise, remove the need for string keys convert them to int keys (string -> int -> val)
 
 util.AddNetworkString("CityRPSyncNetVal")
 
@@ -9,7 +11,7 @@ function CityRP.Net.SyncVal(ply, key)
 			local tbl = CityRP.Net[ply:SteamID64()][key] 
 			net.Start("CityRPSyncNetVal")
 				net.WriteString(key)
-				net.WriteInt(tbl.bits, 6) -- Send the amount of bits that need to be read capped at 32 bits so max we need is 6
+				net.WriteInt(tbl.bits, 6) -- Send the amount of bits that need to be read capped at 32 bits so max we need is 6 (5 + 1) TODO: Change to UInt think it removes the need for 6 
 				net.WriteInt(tbl.val, tbl.bits) -- default to sending 4 bytes
 			net.Send(ply)
 			return true
@@ -23,13 +25,8 @@ function CityRP.RegisterNetVar(ply, key, val, maxval)
 		if CityRP.Net[ply:SteamID64()] == nil then
 			CityRP.Net[ply:SteamID64()] = {} -- Create the players networked values table
 		end
-
-		if type(val) == "number" then
-			CityRP.Net[ply:SteamID64()][key] = {val = val, bits = util.IntToBits(maxval) + 1} -- bits determines the amount bits we need to send the clint
-			return true
-		else
-			ErrorNoHalt("Type (" .. type(val) .. ") is not supported by NetVar")
-		end
+		CityRP.Net[ply:SteamID64()][key] = {val = val, bits = util.IntToBits(maxval) + 1} -- bits determines the amount bits we need to send the clint
+		return true
 	end
 	return false
 end

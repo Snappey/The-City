@@ -35,5 +35,5 @@ function PLAYER:SetNetVar(key, val)
 end
 
 function PLAYER:GetNetVar(key)
-	return CityRP.Net[self:SteamID64()][key].val
+	return CityRP.GetNetVar(self, key)
 end

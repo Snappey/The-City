@@ -7,7 +7,7 @@ function stamina.Process(ply, mv, cmd)
 		if !ply._Stamina then ply._Stamina = 100 CityRP.RegisterNetVar(ply, "Stamina", ply._Stamina, 100) end
 		change = 0
 
-		if mv:KeyDown(IN_SPEED) then
+		if mv:KeyDown(IN_SPEED) && ply:OnGround() then
 			change = change - 2
 		elseif ply._Stamina < 100 then
 			change = change + 1
@@ -19,7 +19,7 @@ function stamina.Process(ply, mv, cmd)
 
 		ply._Stamina = math.Clamp(ply._Stamina + change, 0, 100)
 
-		if change != 0 && ply:GetNetVar("Stamina") != ply._Stamina then
+		if change != 0 && ply:GetNetVar("Stamina") && ply:GetNetVar("Stamina") != ply._Stamina then
 			ply:SetNetVar("Stamina", ply._Stamina, ply:GetNetVar("Stamina"))
 		end
 
