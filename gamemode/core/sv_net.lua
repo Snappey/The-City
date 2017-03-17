@@ -25,7 +25,7 @@ function CityRP.RegisterNetVar(ply, key, val, maxval)
 		if CityRP.Net[ply:SteamID64()] == nil then
 			CityRP.Net[ply:SteamID64()] = {} -- Create the players networked values table
 		end
-		CityRP.Net[ply:SteamID64()][key] = {val = val, bits = util.IntToBits(maxval) + 1} -- bits determines the amount bits we need to send the clint
+		CityRP.Net[ply:SteamID64()][key] = {val = val, bits = util.IntToBits(maxval) + 1} -- bits field determines the amount bits we need to send the clint
 		return true
 	end
 	return false
@@ -49,4 +49,24 @@ function CityRP.GetNetVar(ply, key)
 		end
 	end
 	return false
+end
+
+
+util.AddNetworkString("CityRPSyncInv")
+
+function CityRP.SyncInventory(ply, tbl)
+	if IsValid(ply) then
+		if ply:GetInventory() then
+			net.Start("CityRPSyncInv")
+			net.WriteInt(table.Count(ply:GetInventory()), 16)
+				for k,v in pairs(ply:GetInventory()) do
+					net.WriteString(v.id)
+					net.WriteInt(v.amt, 16)
+				end
+			net.Send(ply)
+			print("Sent Inventory")
+		else
+			print("Player has not loaded")
+		end
+	end
 end

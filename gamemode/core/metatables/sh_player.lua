@@ -23,3 +23,7 @@ function PLAYER:RemoveStatus(status)
 	end
 	return false -- That status isnt on that player
 end
+
+function PLAYER:GetInventory()
+	return self.Inventory 
+end

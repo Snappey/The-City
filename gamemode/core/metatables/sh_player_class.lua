@@ -32,3 +32,8 @@ end )
 function PLAYER:CalcView()
 
 end
+
+
+function PLAYER:HasItem(item, amt)
+	CityRP.Inventory.HasItem(self, item, amt)
+end

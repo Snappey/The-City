@@ -22,10 +22,6 @@ function PLAYER:TakeMoney(amt)
 	return true 
 end
 
-function PLAYER:GetInventory()
-	return self.inv || {}
-end
-
 function PLAYER:Notify(str, type, len)
 	util.AddNotify(str,type,len,self)
 end

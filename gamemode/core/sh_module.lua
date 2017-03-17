@@ -1,6 +1,6 @@
 
-CityRP.Module = {}
-CityRP.Module.Stored = {}
+CityRP.Module = CityRP.Module || {}
+CityRP.Module.Stored = CityRP.Module.Stored || {}
 CityRP.Module.Folder = "city/gamemode/core/module"
 local module = CityRP.Module
 

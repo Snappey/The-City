@@ -5,3 +5,5 @@ CityRP.Configuration["Default Loadout"] = {"weapon_physcannon", "weapon_physgun"
 CityRP.Configuration["Default RPName"] = {"Sean Steel", "Callum Wood", "Luke King", "Connor Zecon"}
 CityRP.Configuration["Currency Symbol"] = "$"
 
+CityRP.Configuration["Inventory Size"] = 50
+

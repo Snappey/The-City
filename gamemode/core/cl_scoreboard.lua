@@ -45,7 +45,7 @@ function scoreboard:Open()
 		playercount:SetPos(self.Frame:GetWide() - surface.GetTextSize("Players: " .. #player.GetAll() .. " / " .. game.MaxPlayers()) + 20, 28)
 		playercount:SizeToContents()
 
-	local s = (50) -- start of the player panels
+	local s = (48) -- start of the player panels
 	for k,v in pairs(player.GetAll()) do
 
 		local pnl = vgui.Create("DPanel", self.Frame)

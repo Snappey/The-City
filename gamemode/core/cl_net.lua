@@ -18,3 +18,15 @@ function CityRP.GetNetVar(key, def)
 	end
 	return def
 end
+
+
+function CityRP.SyncInventory()
+	local ply = LocalPlayer()
+	if ply:GetInventory() == nil then ply.Inventory = {} end
+	local tblsize = net.ReadInt(16)
+	for i=1, tblsize do
+		local ent = net.ReadString()
+		ply.Inventory[ent] = {amt = net.ReadInt(16), id = ent}
+	end
+end
+net.Receive("CityRPSyncInv", CityRP.SyncInventory)

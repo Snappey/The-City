@@ -34,7 +34,7 @@ function GM:DrawInfo()
 		if hook.Call("HUDShouldDrawInfo", GAMEMODE, v.title) then continue end -- Return true to disable, this should be changed to return to false to disable
 		y = (h - 8) - (i * 36)
 
-		if infominimal:GetInt() <= 0 then
+		if infominimal:GetInt() == 0 then
 
 			surface.SetDrawColor(DBLACK, 200)
 				surface.DrawRect(8, y, 34, 34)
@@ -48,6 +48,8 @@ function GM:DrawInfo()
 			surface.SetTextPos(8 + 36 + 4, y + 6)
 			surface.SetFont("HUDInfo")
 				surface.DrawText(v.prefix .. v.var())
+		else
+			
 		end
 		i = i + 1
 	end
@@ -63,7 +65,7 @@ function GM:DrawBar()
 		x = (w - 8) - (i * 38)
 		y = h - 180
 
-		if barminimal:GetInt() <= 0 then
+		if barminimal:GetInt() == 0 then
 
 			surface.SetDrawColor(DBLACK, 200)
 				surface.DrawRect(x, y, 36, 136)
@@ -80,6 +82,7 @@ function GM:DrawBar()
 			surface.SetDrawColor(WHITE)
 				surface.SetMaterial(v.icon)
 				surface.DrawTexturedRect(x + 2, y + 137, 32, 32)
+		else
 
 		end
 		i = i + 1
